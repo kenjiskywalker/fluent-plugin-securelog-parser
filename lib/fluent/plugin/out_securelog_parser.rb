@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class Fluent::SecurelogParserOutput < Fluent::Output
-  Fluent::Plugin.register_output('securelog-parser', self)
+  Fluent::Plugin.register_output('securelog_parser', self)
 
   # tagを書き換えたいので
   config_param :tag, :string
