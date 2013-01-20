@@ -36,9 +36,11 @@ class Fluent::SecurelogParserOutput < Fluent::Output
 
   def emit(tag, es, chain)
     es.each do |time,record|
+
       record.each do |key,value|
         log_parse(value)
-        Fluent::Engine.emit(@tag, time, @securelog)
+        record = {"message" => @securelog}
+        Fluent::Engine.emit(@tag, time, record)
       end
     end
 
