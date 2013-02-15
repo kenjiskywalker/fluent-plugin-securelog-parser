@@ -1,8 +1,59 @@
 # Fluent::Plugin::Securelog::Parser
 
+## Configuration
+
+### 参考
+
+[fluentdのプラグインを書く練習をする為にsecureログをparseしてZabbixで値が取得できるようにしてみた(作成編)](http://blog.kenjiskywalker.org/blog/2013/01/20/fluentd-plugin-create-newbiee/)  
+[fluentdのプラグインを書く練習をする為にsecureログをparseしてZabbixで値が取得できるようにしてみた(設定編)](http://blog.kenjiskywalker.org/blog/2013/01/20/fluentd-plugin-create-newbie/)
+
+### 設定例
+
+`/etc/fluent-agent-lite.conf`
+```
+TAG_PREFIX=""
+LOGS=$(cat <<"EOF"
+secure                   /var/log/secure
+EOF
+)
+PRIMARY_SERVER="0.0.0.0:24224"
+```
+
+`/etc/td-agent/td-agent.conf`
+```
+<source>
+  type forward
+  port 24224
+</source>
+
+<match secure>
+  type securelog-parser
+  tag  seclog.local
+</match>
+
+<match seclog.*>
+  type copy
+   <store>
+    type datacounter
+    count_key message
+    aggregate all
+    tag check.seclog
+    pattern1 acce Accepted
+    pattern2 fail failure
+    pattern3 inva Invalid
+  </store>
+  <store>
+   type file
+   path /tmp/hoge
+  </store>
+</match>
+```
+
+
+
 TODO: Write a gem description
 
-## Installation
+## Installation(no gem update)
 
 Add this line to your application's Gemfile:
 
