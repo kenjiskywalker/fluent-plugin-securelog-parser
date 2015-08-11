@@ -49,7 +49,7 @@ class Fluent::SecurelogParserOutput < Fluent::Output
 
         message = log_parse(value)
         record = {"message" => message}
-        Fluent::Engine.emit(@tag, time, record)
+        router.emit(@tag, time, record)
       end
     end
 
