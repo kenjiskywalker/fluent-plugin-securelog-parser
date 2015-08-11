@@ -16,5 +16,6 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
   gem.add_development_dependency "fluentd"
+  gem.add_development_dependency "test-unit", ">= 3.1.0"
   gem.add_runtime_dependency "fluentd"
 end
